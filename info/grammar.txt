@@ -1,0 +1,51 @@
+ *
+ * so, the tokens allowed are
+ * ']' '[' '?' '+' '*' '|' '/' '^' '-' '(' ')' CHAR
+ * here, CHAR is just every other char one sees
+ * also, escape characters are not handled in scanner level
+ * 
+ * <re>    ::= <exp>
+ *         | <exp> '|' <exp>
+ *         | empty 
+ *         ;
+ *
+ * <exp>   ::= <sub> <exp> ;
+ * 
+ * <sub>   ::= <elem>
+ *         | <elem> '?'
+ *         | <elem> '+'
+ *         | <elem> '*'
+ *         | '[' <slct> ']'
+ *         | '(' <re> ')'
+ *         ;
+ * 
+ * <elem>  ::= CHAR
+ *         | '^'
+ *         | '-'
+ *         | '/' <canc>
+ *         ;
+ * 
+ * <canc>  ::= '?' 
+ *         | '+' 
+ *         | '/' 
+ *         | '*' 
+ *         | '[' 
+ *         | ']' 
+ *         | '(' 
+ *         | ')' 
+ *         | '|'
+ *         ;
+ * 
+ * <slct>  ::= '^' <slin>
+ *         | <slin>
+ *         ;
+ * 
+ * <slin>  ::= CHAR <slinb>
+ *         | CHAR '-' CHAR <slinb>
+ *         ;
+ * 
+ * <slinb> ::= CHAR <slinb>
+ *         | CHAR '-' CHAR <slinb>
+ *         | empty
+ *         ;
+ *

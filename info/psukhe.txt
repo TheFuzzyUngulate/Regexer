@@ -1,0 +1,136 @@
+
+typedef struct re_exp {
+    enum { char_exp, rep_exp, range_exp,
+           plain_exp, bar_exp, opt_exp,
+           select_exp, kleene_exp, empty_exp } tag;
+    union { char                               charExp;
+			char                               emptyExp;
+            struct re_comp*                    repExp;
+            struct re_comp*                    plainExp;
+            struct { struct re_comp* left;
+                     struct re_comp* right; }  barExp;
+            struct re_comp*                    optExp;
+			struct { char min; char max; }     rangeExp;
+            struct { int pos;
+			         struct re_comp* select; } selectExp;
+            struct re_comp*                    kleeneExp; } op;
+} re_exp;
+
+
+/*
+char, a					save_bool(ch == a);
+
+rep-exp:				save_char(ch);
+  char, a				new_counter();
+  char, a				while (true) {
+							do {
+								save_bool(ch == a);
+								if (!load_bool()) {
+									save_bool(false);
+									break;
+								} ch = scan();
+								save_bool(ch == b);
+								if (!load_bool()) {
+									save_bool(false);
+									break;
+								}
+							} while (0);
+
+							if (!load_bool()) {
+								ch = load_char();
+								break;
+							}
+
+							load_char();
+							save_char(ch);
+							inc_counter();
+						} save_bool(count() > 0);
+
+kleene-exp:				save_char(ch);
+  char, a				new_counter();
+  char, a				while (true) {
+
+							do {
+								save_bool(ch == a);
+								if (!load_bool()) {
+									save_bool(false);
+									break;
+								} ch = scan();
+								save_bool(ch == b);
+								if (!load_bool()) {
+									save_bool(false);
+									break;
+								}
+							} while (0);
+
+							if (!load_bool()) {
+								ch = load_char();
+								break;
+							}
+
+							load_char();
+							save_char(ch);
+							inc_counter();
+						} save_bool(count() > -1);
+						
+plain-exp				do {
+	char, a					save_bool(ch == a);
+	char, b					if (!load_bool()) {
+								save_bool(false);
+								break;
+							}
+							ch = scan();
+							save_bool(ch == b);
+							if (!load_bool()) {
+								save_bool(false);
+								break;
+							}
+							ch = scan();
+							save_bool(true);
+						} while (0);
+			
+opt-exp:				save_char(ch);
+	char, a				do {
+	char, b					save_bool(ch == a);
+							if (!load_bool()) {
+								save_bool(false);
+								break;
+							} ch = scan();
+							if (!load_bool()) {
+								save_bool(false);
+								break;
+							}
+							ch = scan();
+							save_bool(true);
+						} while (0);
+						if (!load_bool())
+							ch = load_bool();
+
+select-exp:			        save_char(ch);
+  char, a				save_bool(ch == a);
+  char, b				if (!load_bool()) {
+					    ch = load_char();
+					    save_bool(ch == b);
+					    if (!load_bool()) {
+						ch = load_char();
+						save_bool(false);
+					    }
+					} else save_bool(true);
+
+bar-exp:			        save_char(ch);
+  char, a				save_bool(ch == a);
+  char, b				if (!load_bool()) {
+					    ch = load_char();
+					    save_bool(ch == b);
+					    if (!load_bool()) {
+						ch = load_char();
+						save_bool(false);
+					    }
+					} else save_bool(true);
+
+range-exp:				save_bool(ch >= a && ch <= b);
+  char, a
+  char, b
+
+empty-exp:				save_bool(true);
+*/
