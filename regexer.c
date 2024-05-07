@@ -1992,13 +1992,9 @@ int main(int argc, char** argv)
 	re_parse_t psptr;
 
 	switch (argc) {
-		case 1:
-			str  = "((s|S)teven s(ee|aw) his dad(s'|'s)? car(s) yesterday.?)+";
-			fnom = "output.regex"; 
-			break;
 		case 2:
 			str  = argv[1];
-			fnom = "output.regex";
+			fnom = "output.c";
 			break;
 		case 3:
 			str  = argv[1];
