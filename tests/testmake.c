@@ -41,12 +41,10 @@ bool file_exists(const char *filename)
  * @brief Print out a testcase into a file.
  * 
  * @param mcase Case to be printed out.
- * @param suite Name of suite in which case is contained
  * @param fptr Pointer to file structure to print into.
- * @param num The index of the current testcase being printed
  * @param INDENT Current indent, for aesthetic reasons.
  */
-void m_testcase_print(m_testcase* mcase, char* suite, FILE* fptr, int num, int INDENT)
+void m_testcase_print(m_testcase* mcase, FILE* fptr, int INDENT)
 {
     m_testcase* root;
 
@@ -60,20 +58,18 @@ void m_testcase_print(m_testcase* mcase, char* suite, FILE* fptr, int num, int I
         setspacing(fptr, INDENT);
         fprintf(fptr, "IF ERRORLEVEL %d (\n", root->exp ? 0 : 1);
         setspacing(fptr, INDENT+1);
-        fprintf(fptr, "echo %s %s testcase#%d, as expected\n",
-            suite,
-            root->exp ? "passes" : "fails",
-            num
+        fprintf(
+            fptr,
+            "echo !TEST! %s, as expected\n",
+            root->exp ? "passed" : "failed"
         );
         if (root->next) 
-            m_testcase_print(mcase->next, suite, fptr, num+1, INDENT+1);
+            m_testcase_print(mcase->next, fptr, INDENT+1);
         setspacing(fptr, INDENT);
         fprintf(
             fptr,
-            ") ELSE (echo %s unexpectedly %s on testcase#%d)\n",
-            suite,
-            root->exp ? "fails" : "passes",
-            num
+            ") ELSE (echo !TEST! unexpectedly %s)\n",
+            root->exp ? "passed" : "failed"
         );
     }
 }
@@ -91,8 +87,8 @@ void m_testmake_print(m_list* testmake, FILE* fptr)
     {
         suite = *(m_testsuite**)m_list_get(testmake, i);
         fprintf(fptr, "\necho testing %s\nregexer.exe tmp.c -f tests\\%s\ngcc tmp.c -o tmp\n", suite->name, suite->name);
-        m_testcase_print(suite->cases, suite->name, fptr, 1, 0);
-        fprintf(fptr, "echo deleting temp files\ndel tmp.exe\ndel tmp.c\n", suite->name);
+        m_testcase_print(suite->cases, fptr, 0);
+        fprintf(fptr, "echo deleting temp files\ndel tmp.exe\ndel tmp.c\necho .\n", suite->name);
     }
 
     fprintf(fptr, "\necho deleting regexer.exe\ndel regexer.exe\ncd tests\n");
@@ -141,8 +137,8 @@ int m_testmake_suite_init(m_list* testmake, char* name, char* regex)
 {
     m_testsuite *suite;
     if (testmake && name && regex) {
-        if (strlen(name) > 1) {
-            if (strlen(regex) > 1) {
+        if (strlen(name) > 0) {
+            if (strlen(regex) > 0) {
                 m_testfile_create(name, regex);
                 suite        = (m_testsuite*)malloc(sizeof(m_testsuite));
                 suite->name  = name;
@@ -207,48 +203,204 @@ int main()
 
     testmake = m_testmake_create();
 
-    m_testmake_suite_init(testmake, "t0.txt", "a(a|b)*");
-    m_testmake_add(testmake, "t0.txt", "a", true);
-    m_testmake_add(testmake, "t0.txt", "b", false);
-    m_testmake_add(testmake, "t0.txt", "ab", true);
-    m_testmake_add(testmake, "t0.txt", "abab", true);
-    m_testmake_add(testmake, "t0.txt", "aaaaab", true);
+    // Testing a single atom
 
-    m_testmake_suite_init(testmake, "t1.txt", "0(b|B)(0|1)+");
-    m_testmake_add(testmake, "t1.txt", "0", false);
-    m_testmake_add(testmake, "t1.txt", "b", false);
-    m_testmake_add(testmake, "t1.txt", "0B", false);
-    m_testmake_add(testmake, "t1.txt", "0b0", true);
-    m_testmake_add(testmake, "t1.txt", "0B001", true);
-    m_testmake_add(testmake, "t1.txt", "0b2", false);
-    m_testmake_add(testmake, "t1.txt", "0B0101", true);
-    m_testmake_add(testmake, "t1.txt", "0B111", true);
+    m_testmake_suite_init(testmake, "atom.txt", "A");
+    m_testmake_add(testmake, "atom.txt", "A", true);
+    m_testmake_add(testmake, "atom.txt", "B", false);
+    m_testmake_add(testmake, "atom.txt", "a", false);
+    m_testmake_add(testmake, "atom.txt", "AB", true);
+    m_testmake_add(testmake, "atom.txt", "AAA", true);
+    m_testmake_add(testmake, "atom.txt", "BA", false);
 
-    // "([ !#-&\(-\[\]-}]|\\[tnr"'])*"
+    // Testing two characters
 
-    m_testmake_suite_init(testmake, "t2.txt", "\"([ !#-&\\(-\\[\\]-}]|\\\\[tnr\"\'])*\"");
-    m_testmake_add(testmake, "t2.txt", "\\\"", false);
-    m_testmake_add(testmake, "t2.txt", "string", false);
-    m_testmake_add(testmake, "t2.txt", "\\\"\\\"", true);
-    m_testmake_add(testmake, "t2.txt", "\\\"string\\\"", true);
-    m_testmake_add(testmake, "t2.txt", "\\\"\\\"\\\"", true);
-    m_testmake_add(testmake, "t2.txt", "\\\"friday afternoon\\nyou already know\\n\\\"", true);
+    m_testmake_suite_init(testmake, "twatom.txt", "be");
+    m_testmake_add(testmake, "twatom.txt", "b", false);
+    m_testmake_add(testmake, "twatom.txt", "e", false);
+    m_testmake_add(testmake, "twatom.txt", "be", true);
+    m_testmake_add(testmake, "twatom.txt", "bee", true);
+    m_testmake_add(testmake, "twatom.txt", "babe", false);
+    m_testmake_add(testmake, "twatom.txt", "best", true);
 
-    m_testmake_suite_init(testmake, "t3.txt", "0(x|X)[0-9A-Fa-f]+");
-    m_testmake_add(testmake, "t3.txt", "0", false);
-    m_testmake_add(testmake, "t3.txt", "x", false);
-    m_testmake_add(testmake, "t3.txt", "0x", false);
-    m_testmake_add(testmake, "t3.txt", "0x0", true);
-    m_testmake_add(testmake, "t3.txt", "0XA", true);
-    m_testmake_add(testmake, "t3.txt", "0xFg", false);
-    m_testmake_add(testmake, "t3.txt", "0XACC", true);
-    m_testmake_add(testmake, "t3.txt", "0X100", true);
+    // Testing seven characters
 
-    m_testmake_suite_init(testmake, "t4.txt", "cat|dog");
-    m_testmake_add(testmake, "t4.txt", "cat", true);
-    m_testmake_add(testmake, "t4.txt", "dog", true);
-    m_testmake_add(testmake, "t4.txt", "at", false);
-    m_testmake_add(testmake, "t4.txt", "og", false);
+    m_testmake_suite_init(testmake, "seven.txt", "seven");
+    m_testmake_add(testmake, "seven.txt", "seven", true);
+    m_testmake_add(testmake, "seven.txt", "seventy", true);
+    m_testmake_add(testmake, "seven.txt", "sev", false);
+    m_testmake_add(testmake, "seven.txt", "four score and seven years ago", false);
+    m_testmake_add(testmake, "seven.txt", "seven sons of sceva", true);
+
+    // Testing simple kleene-star
+
+    m_testmake_suite_init(testmake, "klsimp.txt", "a*");
+    m_testmake_add(testmake, "klsimp.txt", "", true);
+    m_testmake_add(testmake, "klsimp.txt", "a", true);
+    m_testmake_add(testmake, "klsimp.txt", "aaaa", true);
+    m_testmake_add(testmake, "klsimp.txt", "random", true);
+    m_testmake_add(testmake, "klsimp.txt", "coyote", true);
+
+    // Testing kleene start with prefix
+
+    m_testmake_suite_init(testmake, "klwpref.txt", "a(ba)*");
+    m_testmake_add(testmake, "klwpref.txt", "a", true);
+    m_testmake_add(testmake, "klwpref.txt", "add", true);
+    m_testmake_add(testmake, "klwpref.txt", "bark", false);
+    m_testmake_add(testmake, "klwpref.txt", "abababa", true);
+    m_testmake_add(testmake, "klwpref.txt", "baba", false);
+    m_testmake_add(testmake, "klwpref.txt", "academic", true);
+
+    // Testing kleene star with suffix
+
+    m_testmake_suite_init(testmake, "klwsuf.txt", "(ba)*a");
+    m_testmake_add(testmake, "klwsuf.txt", "a", true);
+    m_testmake_add(testmake, "klwsuf.txt", "b", false);
+    m_testmake_add(testmake, "klwsuf.txt", "ba", false);
+    m_testmake_add(testmake, "klwsuf.txt", "baa", true);
+    m_testmake_add(testmake, "klwsuf.txt", "add", true);
+    m_testmake_add(testmake, "klwsuf.txt", "baaa", false);
+    m_testmake_add(testmake, "klwsuf.txt", "baaaa", true);
+    m_testmake_add(testmake, "klwsuf.txt", "baaaakery", true);
+    m_testmake_add(testmake, "klwsuf.txt", "academic", true);
+
+    // Testing kleene star with prefix and suffix
+
+    m_testmake_suite_init(testmake, "klwprsuf.txt", "9(1)*4");
+    m_testmake_add(testmake, "klwprsuf.txt", "9", false);
+    m_testmake_add(testmake, "klwprsuf.txt", "1", false);
+    m_testmake_add(testmake, "klwprsuf.txt", "91", false);
+    m_testmake_add(testmake, "klwprsuf.txt", "94", true);
+    m_testmake_add(testmake, "klwprsuf.txt", "914", true);
+    m_testmake_add(testmake, "klwprsuf.txt", "9124", false);
+    m_testmake_add(testmake, "klwprsuf.txt", "91411", true);
+    m_testmake_add(testmake, "klwprsuf.txt", "911111114ab", true);
+
+    // Testing simple repetition
+
+    m_testmake_suite_init(testmake, "rpsimp.txt", "c+");
+    m_testmake_add(testmake, "rpsimp.txt", "", false);
+    m_testmake_add(testmake, "rpsimp.txt", "b", false);
+    m_testmake_add(testmake, "rpsimp.txt", "c", true);
+    m_testmake_add(testmake, "rpsimp.txt", "catholic", true);
+    m_testmake_add(testmake, "rpsimp.txt", "ccc", true);
+
+    // Testing repetition with prefix
+
+    m_testmake_suite_init(testmake, "rpwpref.txt", "ba+");
+    m_testmake_add(testmake, "rpwpref.txt", "b", false);
+    m_testmake_add(testmake, "rpwpref.txt", "a", false);
+    m_testmake_add(testmake, "rpwpref.txt", "ba", true);
+    m_testmake_add(testmake, "rpwpref.txt", "baa", true);
+    m_testmake_add(testmake, "rpwpref.txt", "baathwater", true);
+
+    // Testing repetition with suffix
+
+    m_testmake_suite_init(testmake, "rpwsuf.txt", "b+a");
+    m_testmake_add(testmake, "rpwsuf.txt", "a", false);
+    m_testmake_add(testmake, "rpwsuf.txt", "b", false);
+    m_testmake_add(testmake, "rpwsuf.txt", "ba", true);
+    m_testmake_add(testmake, "rpwsuf.txt", "bbq meetup", false);
+    m_testmake_add(testmake, "rpwsuf.txt", "bbbbbakar", true);
+    m_testmake_add(testmake, "rpwsuf.txt", "qardzhabba", false);
+
+    // Testing repetition with prefix and suffix
+
+    m_testmake_suite_init(testmake, "rpwprsuf.txt", "bi+g");
+    m_testmake_add(testmake, "rpwprsuf.txt", "b", false);
+    m_testmake_add(testmake, "rpwprsuf.txt", "bi", false);
+    m_testmake_add(testmake, "rpwprsuf.txt", "i", false);
+    m_testmake_add(testmake, "rpwprsuf.txt", "ig", false);
+    m_testmake_add(testmake, "rpwprsuf.txt", "iiiiig", false);
+    m_testmake_add(testmake, "rpwprsuf.txt", "bg", false);
+    m_testmake_add(testmake, "rpwprsuf.txt", "big", true);
+    m_testmake_add(testmake, "rpwprsuf.txt", "bigger people", true);
+    m_testmake_add(testmake, "rpwprsuf.txt", "biiiiig", true);
+    m_testmake_add(testmake, "rpwprsuf.txt", "biiIiig", false);
+    m_testmake_add(testmake, "rpwprsuf.txt", "biig natiion", true);
+
+    // Testing simple alternates
+
+    m_testmake_suite_init(testmake, "altsimp.txt", "a|e");
+    m_testmake_add(testmake, "altsimp.txt", "a", true);
+    m_testmake_add(testmake, "altsimp.txt", "e", true);
+    m_testmake_add(testmake, "altsimp.txt", "k", false);
+    m_testmake_add(testmake, "altsimp.txt", "ae", true);
+    m_testmake_add(testmake, "altsimp.txt", "addition", true);
+    m_testmake_add(testmake, "altsimp.txt", "evil people", true);
+
+    // Testing multiple alternates
+
+    m_testmake_suite_init(testmake, "altmult.txt", "a|e|i|o|u");
+    m_testmake_add(testmake, "altmult.txt", "a", true);
+    m_testmake_add(testmake, "altmult.txt", "e", true);
+    m_testmake_add(testmake, "altmult.txt", "i", true);
+    m_testmake_add(testmake, "altmult.txt", "o", true);
+    m_testmake_add(testmake, "altmult.txt", "u", true);
+    m_testmake_add(testmake, "altmult.txt", "eager", true);
+    m_testmake_add(testmake, "altmult.txt", "best", false);
+    m_testmake_add(testmake, "altmult.txt", "hate", false);
+    m_testmake_add(testmake, "altmult.txt", "aeiou", true);
+
+    // Testing alternates with prefix
+
+    m_testmake_suite_init(testmake, "altwpref.txt", "b(y|e)");
+    m_testmake_add(testmake, "altwpref.txt", "b", false);
+    m_testmake_add(testmake, "altwpref.txt", "y", false);
+    m_testmake_add(testmake, "altwpref.txt", "e", false);
+    m_testmake_add(testmake, "altwpref.txt", "by", true);
+    m_testmake_add(testmake, "altwpref.txt", "be", true);
+    m_testmake_add(testmake, "altwpref.txt", "bk", false);
+    m_testmake_add(testmake, "altwpref.txt", "k", false);
+    m_testmake_add(testmake, "altwpref.txt", "bey", true);
+    m_testmake_add(testmake, "altwpref.txt", "bye\\-bye, dear friend\\.", true);
+
+    // Testing alternates with suffix
+
+    m_testmake_suite_init(testmake, "altwprsuf.txt", "(l|b)ad");
+    m_testmake_add(testmake, "altwprsuf.txt", "l", false);
+    m_testmake_add(testmake, "altwprsuf.txt", "b", false);
+    m_testmake_add(testmake, "altwprsuf.txt", "ba", false);
+    m_testmake_add(testmake, "altwprsuf.txt", "la", false);
+    m_testmake_add(testmake, "altwprsuf.txt", "bad", true);
+    m_testmake_add(testmake, "altwprsuf.txt", "lad", true);
+    m_testmake_add(testmake, "altwprsuf.txt", "blad", false);
+    m_testmake_add(testmake, "altwprsuf.txt", "bad things that lad did", true);
+    m_testmake_add(testmake, "altwprsuf.txt", "lads doing bad things", true);
+
+    // C's binary number implementation
+
+    m_testmake_suite_init(testmake, "binimpl.txt", "0(b|B)(0|1)+");
+    m_testmake_add(testmake, "binimpl.txt", "0", false);
+    m_testmake_add(testmake, "binimpl.txt", "b", false);
+    m_testmake_add(testmake, "binimpl.txt", "0B", false);
+    m_testmake_add(testmake, "binimpl.txt", "0b0", true);
+    m_testmake_add(testmake, "binimpl.txt", "0B001", true);
+    m_testmake_add(testmake, "binimpl.txt", "0b2", false);
+    m_testmake_add(testmake, "binimpl.txt", "0B0101", true);
+    m_testmake_add(testmake, "binimpl.txt", "0B111", true);
+
+    // A common string implementation
+
+    m_testmake_suite_init(testmake, "strimpl.txt", "\"([ !#-&\\(-\\[\\]-}]|\\\\[tnr\"\'])*\"");
+    m_testmake_add(testmake, "strimpl.txt", "\\\"", false);
+    m_testmake_add(testmake, "strimpl.txt", "string", false);
+    m_testmake_add(testmake, "strimpl.txt", "\\\"\\\"", true);
+    m_testmake_add(testmake, "strimpl.txt", "\\\"string\\\"", true);
+    m_testmake_add(testmake, "strimpl.txt", "\\\"\\\"\\\"", true);
+    m_testmake_add(testmake, "strimpl.txt", "\\\"friday afternoon\\nyou already know\\n\\\"", true);
+
+    // C's hexadecimal number implementation
+
+    m_testmake_suite_init(testmake, "heximpl.txt", "0(x|X)[0-9A-Fa-f]+");
+    m_testmake_add(testmake, "heximpl.txt", "0", false);
+    m_testmake_add(testmake, "heximpl.txt", "x", false);
+    m_testmake_add(testmake, "heximpl.txt", "0x", false);
+    m_testmake_add(testmake, "heximpl.txt", "0x0", true);
+    m_testmake_add(testmake, "heximpl.txt", "0XA", true);
+    m_testmake_add(testmake, "heximpl.txt", "0xFg", false);
+    m_testmake_add(testmake, "heximpl.txt", "0XACC", true);
+    m_testmake_add(testmake, "heximpl.txt", "0X100", true);
 
     // feel free to make more tests
 

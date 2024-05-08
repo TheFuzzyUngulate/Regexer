@@ -7,3 +7,4 @@ run: $(datatypes) testmake.c
 clean:
 	del testmake.exe
 	del tests.bat
+	del *.txt
