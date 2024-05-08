@@ -1992,6 +1992,10 @@ int main(int argc, char** argv)
 	re_parse_t psptr;
 
 	switch (argc) {
+		case 1:
+			fprintf(stderr, "regular expression not provided\n");
+			exit(EXIT_FAILURE);
+			break;
 		case 2:
 			str  = argv[1];
 			fnom = "output.c";

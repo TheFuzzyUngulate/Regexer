@@ -45,18 +45,6 @@ m_bstree_get_min(m_bstree_entry* t)
     } return NULL;
 }
 
-static inline void 
-m_bstree_entry_print(m_bstree_entry* t, char* (*tostr)(const void*), int INDENT)
-{
-    if (t != NULL) {
-        for (int i = 0; i < INDENT; ++i) 
-            printf(" ");
-        printf("data: %s\n", tostr(t->data));
-        m_bstree_entry_print(t->left, tostr, INDENT+1);
-        m_bstree_entry_print(t->right, tostr, INDENT+1);
-    }
-}
-
 static inline m_bstree_entry*
 m_bstree_right_rotate(m_bstree_entry* y)
 {
@@ -83,10 +71,6 @@ m_bstree_left_rotate(m_bstree_entry* x)
     y->height = TREEHEIGHT(y);
 
     return y;
-}
-
-void m_bstree_print(m_bstree* t) {
-    m_bstree_entry_print(t->troot, t->to_string, 0);
 }
 
 int m_bstree_size(m_bstree* t)
@@ -222,17 +206,13 @@ int m_bstree_remove(m_bstree* t, void *m)
     return -1;
 }
 
-m_bstree* m_bstree_init(size_t size,
-                        int (*cmp)(const void*, const void*),
-                        char* (*str)(const void*))
-{
+m_bstree* m_bstree_init(size_t size, int (*cmp)(const void*, const void*)) {
     m_bstree* t = (m_bstree*)malloc(sizeof(m_bstree));
 
     t->size          = size;
     t->troot         = NULL;
     t->table_height  = 0;
     t->compare       = cmp;
-    t->to_string     = str;
 
     return t;
 }
@@ -280,7 +260,6 @@ m_bstree* m_bstree_copy(m_bstree* src)
         t->size          = src->size;
         t->table_height  = src->table_height;
         t->compare       = src->compare;
-        t->to_string     = src->to_string;
         t->troot         = m_bstree_entry_copy(src->troot);
     }
 

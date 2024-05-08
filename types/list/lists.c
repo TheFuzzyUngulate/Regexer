@@ -1,12 +1,5 @@
 #include "lists.h"
 
-static char*
-m_list_def_printfunc(const void* item) {
-    char* ch = malloc(8);
-    snprintf(ch, 8, "%p", item);
-    return ch;
-}
-
 /**
  * @brief Initialize a list.
  * 
@@ -14,26 +7,15 @@ m_list_def_printfunc(const void* item) {
  * @param to_string Function converting data element to printable form.
  * @return Pointer to dynamically allocated pointer.
  */
-m_list* m_list_init(size_t size, char* (*to_string)(const void*)) 
+m_list* m_list_init(size_t size) 
 {
     m_list* m    = malloc(sizeof(m_list));
     m->size      = size;
     m->count     = 0;
     m->capacity  = 2;
     m->array     = malloc(m->capacity * m->size);
-    m->to_string = to_string == NULL ? m_list_def_printfunc : to_string;
 
     return m;
-}
-
-/**
- * @brief Print contents of a list.
- * 
- * @param m Pointer to list to be printed out.
- */
-void m_list_print(m_list* m) {
-    for (int i = 0; i < m->count; ++i)
-        printf("(%d)\t%s\n", i+1, m->to_string(m->array + (i * m->size)));
 }
 
 /**
@@ -74,7 +56,6 @@ m_list* m_list_copy(m_list* src)
     dst->size       = src->size;
     dst->count      = src->count;
     dst->capacity   = src->capacity;
-    dst->to_string  = src->to_string;
     dst->array      = malloc(dst->capacity * dst->size);
     memcpy(dst->array, src->array, src->count * src->size);
 

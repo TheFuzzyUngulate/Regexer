@@ -48,10 +48,6 @@ m_hashentry_print(m_bstree_entry* m, char* (*tostr)(const void*), int INDENT)
     }
 }
 
-void m_hashmap_print(m_hashmap* m) {
-    m_hashentry_print(m->tree->troot, m->tree->to_string, 0);
-}
-
 static void*
 m_hashmap_def_item_copy(m_hashmap* m, void* src)
 {
@@ -67,15 +63,13 @@ m_hashmap_def_item_destr(m_hashmap* m, void* src)
     return 0;
 }
 
-m_hashmap* m_hashmap_init(int vsize, 
-                      unsigned long (*hash)(unsigned char* str),
-                      char* (*tostr)(const void*))
+m_hashmap* m_hashmap_init(int vsize, unsigned long (*hash)(unsigned char* str))
 {
     m_hashmap* map = (m_hashmap*)malloc(sizeof(m_hashmap));
     map->hash      = hash == NULL ? m_hashmap_def_hashfunc : hash;
     map->vsize     = vsize;
-    map->tree      = m_bstree_init(sizeof(m_hashentry), m_hashentry_comp, tostr);
-    map->dump      = m_bstree_init(sizeof(m_dumpentry), m_dump_comp, m_dump_to_string);
+    map->tree      = m_bstree_init(sizeof(m_hashentry), m_hashentry_comp);
+    map->dump      = m_bstree_init(sizeof(m_dumpentry), m_dump_comp);
     
     return map;
 }
@@ -87,7 +81,7 @@ int m_hashmap_destroy(m_hashmap* m) {
     return 0;
 }
 
-void* m_hashmap_get_by_key(m_hashmap *m, char* key)
+void* m_hashmap_get(m_hashmap *m, char* key)
 {
     m_hashentry* e = (m_hashentry*)malloc(sizeof(m_hashentry));
     e->key = m->hash(key);
@@ -102,14 +96,37 @@ void* m_hashmap_get_by_key(m_hashmap *m, char* key)
     } else return ((m_hashentry*)ret)->value;
 }
 
-void* m_hashmap_get_by_value(m_hashmap *m, void* val)
+int m_hashmap_set(m_hashmap* m, char* key, void* val)
 {
-    return NULL;
+    m_hashentry* e = (m_hashentry*)malloc(sizeof(m_hashentry));
+    e->key = m->hash(key);
+    printf("Finding %s, with hash %u\n", key, e->key);
+    void* ret = m_bstree_find(m->tree, e);
+    if (ret == NULL) {
+        printf("Didn't find it??\n");
+        m_dumpentry* d = (m_dumpentry*)malloc(sizeof(m_dumpentry));
+        d->key = key;
+        ret = m_bstree_find(m->dump, d);
+        if (ret) {
+            ((m_hashentry*)ret)->value = val;
+            return EXIT_SUCCESS;
+        } else return EXIT_FAILURE;
+    } else {
+        ((m_hashentry*)ret)->value = val;
+        return EXIT_SUCCESS;
+    }
 }
 
-int m_hashmap_remove_entry(m_hashmap *m, void* res)
+void m_hashmap_remove(m_hashmap *m, char* key)
 {
-    return 0;
+    m_hashentry* e = (m_hashentry*)malloc(sizeof(m_hashentry));
+    e->key = m->hash(key);
+    printf("Finding %s, with hash %u\n", key, e->key);
+    void* ret = m_bstree_find(m->tree, e);
+    if (ret != NULL) {
+        printf("Found it!!\n");
+        m_bstree_remove(m->tree, ret);
+    }
 }
 
 int m_hashmap_add_entry(m_hashmap *m, char* key, void* val)

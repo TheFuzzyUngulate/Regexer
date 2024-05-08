@@ -12,7 +12,6 @@ typedef struct m_list {
     int capacity;                                                       // Current list capacity
     void* array;                                                        // Container of list
     size_t size;                                                        // Size of element type
-    char* (*to_string)(const void*);                                    // Function converting element to readable string 
 } m_list;
 
 void m_list_destroy(m_list* m);
@@ -22,13 +21,12 @@ int m_list_append(m_list *m, void* i);
 int m_list_clear(m_list *m);
 void* m_list_get(m_list *m, int index);
 int m_list_remove(m_list* m, int index);
-void m_list_print(m_list* m);
 void* m_list_to_array(m_list* m);
 void* m_list_back(m_list* m);
 int m_list_replace(m_list* m, int index, void* i);
 int m_list_extend(m_list* tar, m_list* src);
-m_list* m_list_init(size_t size, char* (*to_string)(const void*));
+m_list* m_list_init(size_t size);
 
-#define m_list_create(type, tstr) (m_list_init(sizeof(type), (tstr)))
+#define m_list_create(type) (m_list_init(sizeof(type)))
 
 #endif

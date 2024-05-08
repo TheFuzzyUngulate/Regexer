@@ -30,14 +30,13 @@ typedef struct m_hashmap
 }
 m_hashmap;
 
-void m_hashmap_print(m_hashmap* m);
 int m_hashmap_destroy(m_hashmap* m);
-void* m_hashmap_get_by_key(m_hashmap *m, char* key);
-void* m_hashmap_get_by_value(m_hashmap *m, void* val);
-int m_hashmap_remove_entry(m_hashmap *m, void* res);
+int m_hashmap_set(m_hashmap *m, char* key, void* val);
+void* m_hashmap_get(m_hashmap *m, char* key);
+void m_hashmap_remove(m_hashmap *m, char* key);
 int m_hashmap_add_entry(m_hashmap *m, char* key, void* val);
-m_hashmap* m_hashmap_init(int vsize, unsigned long (*hash)(unsigned char* str), char* (*tostr)(const void*));
+m_hashmap* m_hashmap_init(int vsize, unsigned long (*hash)(unsigned char* str));
 
-#define m_hashmap_create(type, hash, tstr) (m_hashmap_init(sizeof((type)), (hash), (tstr)))
+#define m_hashmap_create(type, hash) (m_hashmap_init(sizeof(type), (hash)))
 
 #endif
