@@ -83,18 +83,59 @@ void re_conv_init() {
 
 int main(int argc, char** argv)
 {
-    if (argc < 2) {
-        fprintf(stderr, "give me arg..\n");
+    bool show   = false;
+    char* instr = NULL;
+
+    /* input */
+
+    for (int i = 1; i < argc; ++i)
+	{
+		char* arg = argv[i];
+		
+		if (arg[0] == '-') {
+			if (strlen(arg) != 2) {
+				fprintf(stderr, "invalid flag \"%s\" argument given.\n", arg);
+			    return EXIT_FAILURE;
+			}
+			switch (arg[1])
+			{
+				case 'o':
+					show = true;
+					break;
+
+				default:
+					fprintf(stderr, "invalid flag \"%s\" argument given.\n", arg);
+					return EXIT_FAILURE;
+			}
+		}
+		
+		else
+		{
+			if (instr == NULL) {
+				instr = arg;
+			} else {
+				fprintf(stderr, "extra argument \"%s\" provided.\n", arg);
+				return EXIT_FAILURE;
+			}
+		}
+	}
+
+    if (instr == NULL) {
+        fprintf(stderr, "no regex argument provided.\n");
         return EXIT_FAILURE;
     }
 
     char ch;
+    bool res;
     re_conv_init();
-    set_string(argv[1]);
+    set_string(instr);
     ch = scan();
 
     /* input */
-    
-    printf(load_bool() ? "true" : "false");
-    return EXIT_SUCCESS;
+
+    res = load_bool();
+
+    if (show) {
+        printf("%s evaluates as %s\n", instr, res ? "true" : "false");
+    } return res ? EXIT_SUCCESS : EXIT_FAILURE;
 }

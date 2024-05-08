@@ -54,13 +54,13 @@ void m_testcase_print(m_testcase* mcase, char* suite, FILE* fptr, int num, int I
 
     if (root != NULL) {
         setspacing(fptr, INDENT);
-        fprintf(fptr, "set TEST=%s\n", root->str);
+        fprintf(fptr, "set TEST=\"%s\"\n", root->str);
         setspacing(fptr, INDENT);
-        fprintf(fptr, "tmp.exe %%TEST%%\n");
+        fprintf(fptr, "tmp.exe !TEST!\n");
         setspacing(fptr, INDENT);
         fprintf(fptr, "IF ERRORLEVEL %d (\n", root->exp ? 0 : 1);
         setspacing(fptr, INDENT+1);
-        fprintf(fptr, "@echo %s %s testcase#%d, as expected\n",
+        fprintf(fptr, "echo %s %s testcase#%d, as expected\n",
             suite,
             root->exp ? "passes" : "fails",
             num
@@ -70,7 +70,7 @@ void m_testcase_print(m_testcase* mcase, char* suite, FILE* fptr, int num, int I
         setspacing(fptr, INDENT);
         fprintf(
             fptr,
-            ") ELSE (@echo %s unexpectedly %s on testcase#%d)\n",
+            ") ELSE (echo %s unexpectedly %s on testcase#%d)\n",
             suite,
             root->exp ? "fails" : "passes",
             num
@@ -84,19 +84,19 @@ void m_testmake_print(m_list* testmake, FILE* fptr)
     m_testcase*  mcase;
     m_testsuite* suite;
 
-    fprintf(fptr, "@echo off\nSETLOCAL\n");
-    fprintf(fptr, "\n@echo compiling regexer.c\ncd ..\nmake\n@echo compiled regexer.exe\n");
+    fprintf(fptr, "@echo off\nsetlocal EnableDelayedExpansion\n");
+    fprintf(fptr, "\necho compiling regexer.c\ncd ..\nmake\necho compiled regexer.exe\n");
 
     for (i = 0; i < testmake->count; ++i)
     {
         suite = *(m_testsuite**)m_list_get(testmake, i);
-        fprintf(fptr, "\n@echo testing %s\nregexer.exe tmp.c -f tests\\%s\ngcc tmp.c -o tmp\n", suite->name, suite->name);
+        fprintf(fptr, "\necho testing %s\nregexer.exe tmp.c -f tests\\%s\ngcc tmp.c -o tmp\n", suite->name, suite->name);
         m_testcase_print(suite->cases, suite->name, fptr, 1, 0);
-        fprintf(fptr, "@echo deleting temp files\ndel tmp.exe\ndel tmp.c\n");
+        fprintf(fptr, "echo deleting temp files\ndel tmp.exe\ndel tmp.c\n", suite->name);
     }
 
-    fprintf(fptr, "\n@echo deleting regexer.exe\ndel regexer.exe\ncd tests\n");
-    fprintf(fptr, "\nENDLOCAL\n@echo on\n");
+    fprintf(fptr, "\necho deleting regexer.exe\ndel regexer.exe\ncd tests\n");
+    fprintf(fptr, "\nendlocal & set FOO=%%FOO%%\n@echo on\n");
 }
 
 /**
@@ -249,6 +249,8 @@ int main()
     m_testmake_add(testmake, "t4.txt", "dog", true);
     m_testmake_add(testmake, "t4.txt", "at", false);
     m_testmake_add(testmake, "t4.txt", "og", false);
+
+    // feel free to make more tests
 
     file = fopen("tests.bat", "w");
 	if (file == NULL) {

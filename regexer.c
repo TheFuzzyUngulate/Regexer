@@ -441,8 +441,8 @@ re_lex(re_scan_t* sc)
  *         ;
  */
 
-#define P_RULE_COUNT 47
-#define P_STATE_COUNT 60
+#define P_RULE_COUNT 46
+#define P_STATE_COUNT 59
 #define P_ELEMENT_COUNT 31
 
 typedef struct 
@@ -538,6 +538,7 @@ re_table_set(re_pobj* table, int state, re_tk token, re_pobj data)
 static inline re_pobj*
 re_table_prepare()
 {
+    
     re_pobj* table = (re_pobj*)calloc(P_STATE_COUNT * P_ELEMENT_COUNT, sizeof(re_pobj));
 
 	re_table_set(table, 0, P_TOK_CAP, (re_pobj){ .action = SHIFT, .op.shift = 1});
@@ -564,10 +565,10 @@ re_table_prepare()
 	re_table_set(table, 5, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
 	re_table_set(table, 5, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
 	re_table_set(table, 5, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
-	re_table_set(table, 5, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 20});
-	re_table_set(table, 5, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 21});
-	re_table_set(table, 5, P_LIT_slc, (re_pobj){ .action = GOTO, .op.sgoto = 22});
-	re_table_set(table, 5, P_LIT_sli, (re_pobj){ .action = GOTO, .op.sgoto = 23});
+	re_table_set(table, 5, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
+	re_table_set(table, 5, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 20});
+	re_table_set(table, 5, P_LIT_slc, (re_pobj){ .action = GOTO, .op.sgoto = 21});
+	re_table_set(table, 5, P_LIT_sli, (re_pobj){ .action = GOTO, .op.sgoto = 22});
 	re_table_set(table, 6, P_TOK_CAP, (re_pobj){ .action = SHIFT, .op.shift = 1});
 	re_table_set(table, 6, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
 	re_table_set(table, 6, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
@@ -583,25 +584,25 @@ re_table_prepare()
 	re_table_set(table, 6, P_LIT_exp, (re_pobj){ .action = GOTO, .op.sgoto = 13});
 	re_table_set(table, 6, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 14});
 	re_table_set(table, 6, P_LIT_msub, (re_pobj){ .action = GOTO, .op.sgoto = 15});
-	re_table_set(table, 6, P_LIT_re, (re_pobj){ .action = GOTO, .op.sgoto = 24});
+	re_table_set(table, 6, P_LIT_re, (re_pobj){ .action = GOTO, .op.sgoto = 23});
 	re_table_set(table, 6, P_LIT_sub, (re_pobj){ .action = GOTO, .op.sgoto = 17});
-	re_table_set(table, 9, P_TOK_BAR, (re_pobj){ .action = SHIFT, .op.shift = 25});
-	re_table_set(table, 9, P_TOK_CAP, (re_pobj){ .action = SHIFT, .op.shift = 26});
-	re_table_set(table, 9, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 27});
-	re_table_set(table, 9, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 28});
-	re_table_set(table, 9, P_TOK_LBRACK, (re_pobj){ .action = SHIFT, .op.shift = 29});
-	re_table_set(table, 9, P_TOK_LPAREN, (re_pobj){ .action = SHIFT, .op.shift = 30});
-	re_table_set(table, 9, P_TOK_MINUS, (re_pobj){ .action = SHIFT, .op.shift = 31});
-	re_table_set(table, 9, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 32});
-	re_table_set(table, 9, P_TOK_PLUS, (re_pobj){ .action = SHIFT, .op.shift = 33});
-	re_table_set(table, 9, P_TOK_QUESTION, (re_pobj){ .action = SHIFT, .op.shift = 34});
-	re_table_set(table, 9, P_TOK_RBRACK, (re_pobj){ .action = SHIFT, .op.shift = 35});
-	re_table_set(table, 9, P_TOK_RPAREN, (re_pobj){ .action = SHIFT, .op.shift = 36});
-	re_table_set(table, 9, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 37});
-	re_table_set(table, 9, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 38});
-	re_table_set(table, 9, P_TOK_TIMES, (re_pobj){ .action = SHIFT, .op.shift = 39});
-	re_table_set(table, 13, P_TOK_BAR, (re_pobj){ .action = SHIFT, .op.shift = 40});
-	re_table_set(table, 13, P_LIT_re_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 41});
+	re_table_set(table, 9, P_TOK_BAR, (re_pobj){ .action = SHIFT, .op.shift = 24});
+	re_table_set(table, 9, P_TOK_CAP, (re_pobj){ .action = SHIFT, .op.shift = 25});
+	re_table_set(table, 9, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 26});
+	re_table_set(table, 9, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 27});
+	re_table_set(table, 9, P_TOK_LBRACK, (re_pobj){ .action = SHIFT, .op.shift = 28});
+	re_table_set(table, 9, P_TOK_LPAREN, (re_pobj){ .action = SHIFT, .op.shift = 29});
+	re_table_set(table, 9, P_TOK_MINUS, (re_pobj){ .action = SHIFT, .op.shift = 30});
+	re_table_set(table, 9, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 31});
+	re_table_set(table, 9, P_TOK_PLUS, (re_pobj){ .action = SHIFT, .op.shift = 32});
+	re_table_set(table, 9, P_TOK_QUESTION, (re_pobj){ .action = SHIFT, .op.shift = 33});
+	re_table_set(table, 9, P_TOK_RBRACK, (re_pobj){ .action = SHIFT, .op.shift = 34});
+	re_table_set(table, 9, P_TOK_RPAREN, (re_pobj){ .action = SHIFT, .op.shift = 35});
+	re_table_set(table, 9, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 36});
+	re_table_set(table, 9, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 37});
+	re_table_set(table, 9, P_TOK_TIMES, (re_pobj){ .action = SHIFT, .op.shift = 38});
+	re_table_set(table, 13, P_TOK_BAR, (re_pobj){ .action = SHIFT, .op.shift = 39});
+	re_table_set(table, 13, P_LIT_re_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 40});
 	re_table_set(table, 15, P_TOK_CAP, (re_pobj){ .action = SHIFT, .op.shift = 1});
 	re_table_set(table, 15, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
 	re_table_set(table, 15, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
@@ -614,95 +615,97 @@ re_table_prepare()
 	re_table_set(table, 15, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
 	re_table_set(table, 15, P_LIT_elm, (re_pobj){ .action = GOTO, .op.sgoto = 11});
 	re_table_set(table, 15, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
-	re_table_set(table, 15, P_LIT_exp_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 42});
+	re_table_set(table, 15, P_LIT_exp_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 41});
 	re_table_set(table, 15, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 14});
-	re_table_set(table, 15, P_LIT_msub, (re_pobj){ .action = GOTO, .op.sgoto = 43});
+	re_table_set(table, 15, P_LIT_msub, (re_pobj){ .action = GOTO, .op.sgoto = 42});
 	re_table_set(table, 15, P_LIT_sub, (re_pobj){ .action = GOTO, .op.sgoto = 17});
-	re_table_set(table, 17, P_TOK_PLUS, (re_pobj){ .action = SHIFT, .op.shift = 44});
-	re_table_set(table, 17, P_TOK_QUESTION, (re_pobj){ .action = SHIFT, .op.shift = 45});
-	re_table_set(table, 17, P_TOK_TIMES, (re_pobj){ .action = SHIFT, .op.shift = 46});
-	re_table_set(table, 17, P_LIT_msub_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 47});
+	re_table_set(table, 17, P_TOK_PLUS, (re_pobj){ .action = SHIFT, .op.shift = 43});
+	re_table_set(table, 17, P_TOK_QUESTION, (re_pobj){ .action = SHIFT, .op.shift = 44});
+	re_table_set(table, 17, P_TOK_TIMES, (re_pobj){ .action = SHIFT, .op.shift = 45});
+	re_table_set(table, 17, P_LIT_msub_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 46});
 	re_table_set(table, 18, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
 	re_table_set(table, 18, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
 	re_table_set(table, 18, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 19});
 	re_table_set(table, 18, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
 	re_table_set(table, 18, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
 	re_table_set(table, 18, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
-	re_table_set(table, 18, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 20});
-	re_table_set(table, 18, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 21});
-	re_table_set(table, 18, P_LIT_sli, (re_pobj){ .action = GOTO, .op.sgoto = 48});
-	re_table_set(table, 21, P_TOK_MINUS, (re_pobj){ .action = SHIFT, .op.shift = 49});
-	re_table_set(table, 22, P_TOK_RBRACK, (re_pobj){ .action = SHIFT, .op.shift = 50});
-	re_table_set(table, 23, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
-	re_table_set(table, 23, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
-	re_table_set(table, 23, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 19});
-	re_table_set(table, 23, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
-	re_table_set(table, 23, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
-	re_table_set(table, 23, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
-	re_table_set(table, 23, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 20});
-	re_table_set(table, 23, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 21});
-	re_table_set(table, 23, P_LIT_slc_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 51});
-	re_table_set(table, 23, P_LIT_sli, (re_pobj){ .action = GOTO, .op.sgoto = 52});
-	re_table_set(table, 24, P_TOK_RPAREN, (re_pobj){ .action = SHIFT, .op.shift = 53});
-	re_table_set(table, 40, P_TOK_CAP, (re_pobj){ .action = SHIFT, .op.shift = 1});
-	re_table_set(table, 40, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
-	re_table_set(table, 40, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
-	re_table_set(table, 40, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 4});
-	re_table_set(table, 40, P_TOK_LBRACK, (re_pobj){ .action = SHIFT, .op.shift = 5});
-	re_table_set(table, 40, P_TOK_LPAREN, (re_pobj){ .action = SHIFT, .op.shift = 6});
-	re_table_set(table, 40, P_TOK_MINUS, (re_pobj){ .action = SHIFT, .op.shift = 7});
-	re_table_set(table, 40, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
-	re_table_set(table, 40, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
-	re_table_set(table, 40, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
-	re_table_set(table, 40, P_LIT_elm, (re_pobj){ .action = GOTO, .op.sgoto = 11});
-	re_table_set(table, 40, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
-	re_table_set(table, 40, P_LIT_exp, (re_pobj){ .action = GOTO, .op.sgoto = 54});
-	re_table_set(table, 40, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 14});
-	re_table_set(table, 40, P_LIT_msub, (re_pobj){ .action = GOTO, .op.sgoto = 15});
-	re_table_set(table, 40, P_LIT_sub, (re_pobj){ .action = GOTO, .op.sgoto = 17});
-	re_table_set(table, 43, P_TOK_CAP, (re_pobj){ .action = SHIFT, .op.shift = 1});
-	re_table_set(table, 43, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
-	re_table_set(table, 43, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
-	re_table_set(table, 43, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 4});
-	re_table_set(table, 43, P_TOK_LBRACK, (re_pobj){ .action = SHIFT, .op.shift = 5});
-	re_table_set(table, 43, P_TOK_LPAREN, (re_pobj){ .action = SHIFT, .op.shift = 6});
-	re_table_set(table, 43, P_TOK_MINUS, (re_pobj){ .action = SHIFT, .op.shift = 7});
-	re_table_set(table, 43, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
-	re_table_set(table, 43, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
-	re_table_set(table, 43, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
-	re_table_set(table, 43, P_LIT_elm, (re_pobj){ .action = GOTO, .op.sgoto = 11});
-	re_table_set(table, 43, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
-	re_table_set(table, 43, P_LIT_exp_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 55});
-	re_table_set(table, 43, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 14});
-	re_table_set(table, 43, P_LIT_msub, (re_pobj){ .action = GOTO, .op.sgoto = 43});
-	re_table_set(table, 43, P_LIT_sub, (re_pobj){ .action = GOTO, .op.sgoto = 17});
+	re_table_set(table, 18, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
+	re_table_set(table, 18, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 20});
+	re_table_set(table, 18, P_LIT_sli, (re_pobj){ .action = GOTO, .op.sgoto = 47});
+	re_table_set(table, 20, P_TOK_MINUS, (re_pobj){ .action = SHIFT, .op.shift = 48});
+	re_table_set(table, 21, P_TOK_RBRACK, (re_pobj){ .action = SHIFT, .op.shift = 49});
+	re_table_set(table, 22, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
+	re_table_set(table, 22, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
+	re_table_set(table, 22, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 19});
+	re_table_set(table, 22, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
+	re_table_set(table, 22, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
+	re_table_set(table, 22, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
+	re_table_set(table, 22, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
+	re_table_set(table, 22, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 20});
+	re_table_set(table, 22, P_LIT_slc_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 50});
+	re_table_set(table, 22, P_LIT_sli, (re_pobj){ .action = GOTO, .op.sgoto = 51});
+	re_table_set(table, 23, P_TOK_RPAREN, (re_pobj){ .action = SHIFT, .op.shift = 52});
+	re_table_set(table, 39, P_TOK_CAP, (re_pobj){ .action = SHIFT, .op.shift = 1});
+	re_table_set(table, 39, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
+	re_table_set(table, 39, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
+	re_table_set(table, 39, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 4});
+	re_table_set(table, 39, P_TOK_LBRACK, (re_pobj){ .action = SHIFT, .op.shift = 5});
+	re_table_set(table, 39, P_TOK_LPAREN, (re_pobj){ .action = SHIFT, .op.shift = 6});
+	re_table_set(table, 39, P_TOK_MINUS, (re_pobj){ .action = SHIFT, .op.shift = 7});
+	re_table_set(table, 39, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
+	re_table_set(table, 39, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
+	re_table_set(table, 39, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
+	re_table_set(table, 39, P_LIT_elm, (re_pobj){ .action = GOTO, .op.sgoto = 11});
+	re_table_set(table, 39, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
+	re_table_set(table, 39, P_LIT_exp, (re_pobj){ .action = GOTO, .op.sgoto = 53});
+	re_table_set(table, 39, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 14});
+	re_table_set(table, 39, P_LIT_msub, (re_pobj){ .action = GOTO, .op.sgoto = 15});
+	re_table_set(table, 39, P_LIT_sub, (re_pobj){ .action = GOTO, .op.sgoto = 17});
+	re_table_set(table, 42, P_TOK_CAP, (re_pobj){ .action = SHIFT, .op.shift = 1});
+	re_table_set(table, 42, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
+	re_table_set(table, 42, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
+	re_table_set(table, 42, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 4});
+	re_table_set(table, 42, P_TOK_LBRACK, (re_pobj){ .action = SHIFT, .op.shift = 5});
+	re_table_set(table, 42, P_TOK_LPAREN, (re_pobj){ .action = SHIFT, .op.shift = 6});
+	re_table_set(table, 42, P_TOK_MINUS, (re_pobj){ .action = SHIFT, .op.shift = 7});
+	re_table_set(table, 42, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
+	re_table_set(table, 42, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
+	re_table_set(table, 42, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
+	re_table_set(table, 42, P_LIT_elm, (re_pobj){ .action = GOTO, .op.sgoto = 11});
+	re_table_set(table, 42, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
+	re_table_set(table, 42, P_LIT_exp_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 54});
+	re_table_set(table, 42, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 14});
+	re_table_set(table, 42, P_LIT_msub, (re_pobj){ .action = GOTO, .op.sgoto = 42});
+	re_table_set(table, 42, P_LIT_sub, (re_pobj){ .action = GOTO, .op.sgoto = 17});
+	re_table_set(table, 47, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
+	re_table_set(table, 47, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
+	re_table_set(table, 47, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 19});
+	re_table_set(table, 47, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
+	re_table_set(table, 47, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
+	re_table_set(table, 47, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
+	re_table_set(table, 47, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
+	re_table_set(table, 47, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 20});
+	re_table_set(table, 47, P_LIT_slc_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 55});
+	re_table_set(table, 47, P_LIT_sli, (re_pobj){ .action = GOTO, .op.sgoto = 51});
 	re_table_set(table, 48, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
 	re_table_set(table, 48, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
-	re_table_set(table, 48, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 19});
 	re_table_set(table, 48, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
 	re_table_set(table, 48, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
 	re_table_set(table, 48, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
-	re_table_set(table, 48, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 20});
-	re_table_set(table, 48, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 21});
-	re_table_set(table, 48, P_LIT_slc_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 56});
-	re_table_set(table, 48, P_LIT_sli, (re_pobj){ .action = GOTO, .op.sgoto = 52});
-	re_table_set(table, 49, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
-	re_table_set(table, 49, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
-	re_table_set(table, 49, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
-	re_table_set(table, 49, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
-	re_table_set(table, 49, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 57});
-	re_table_set(table, 52, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
-	re_table_set(table, 52, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
-	re_table_set(table, 52, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 19});
-	re_table_set(table, 52, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
-	re_table_set(table, 52, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
-	re_table_set(table, 52, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
-	re_table_set(table, 52, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 20});
-	re_table_set(table, 52, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 21});
-	re_table_set(table, 52, P_LIT_slc_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 58});
-	re_table_set(table, 52, P_LIT_sli, (re_pobj){ .action = GOTO, .op.sgoto = 52});
-	re_table_set(table, 54, P_TOK_BAR, (re_pobj){ .action = SHIFT, .op.shift = 40});
-	re_table_set(table, 54, P_LIT_re_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 59});
+	re_table_set(table, 48, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
+	re_table_set(table, 48, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 56});
+	re_table_set(table, 51, P_TOK_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 2});
+	re_table_set(table, 51, P_TOK_CRETURN_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 3});
+	re_table_set(table, 51, P_TOK_DOT, (re_pobj){ .action = SHIFT, .op.shift = 19});
+	re_table_set(table, 51, P_TOK_NEWLINE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 8});
+	re_table_set(table, 51, P_TOK_SLASH, (re_pobj){ .action = SHIFT, .op.shift = 9});
+	re_table_set(table, 51, P_TOK_TABULATE_CHAR, (re_pobj){ .action = SHIFT, .op.shift = 10});
+	re_table_set(table, 51, P_LIT_esc, (re_pobj){ .action = GOTO, .op.sgoto = 12});
+	re_table_set(table, 51, P_LIT_fch, (re_pobj){ .action = GOTO, .op.sgoto = 20});
+	re_table_set(table, 51, P_LIT_slc_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 57});
+	re_table_set(table, 51, P_LIT_sli, (re_pobj){ .action = GOTO, .op.sgoto = 51});
+	re_table_set(table, 53, P_TOK_BAR, (re_pobj){ .action = SHIFT, .op.shift = 39});
+	re_table_set(table, 53, P_LIT_re_BAR, (re_pobj){ .action = GOTO, .op.sgoto = 58});
 	re_table_set(table, 0, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {3, 0, P_LIT_re}});
 	re_table_set(table, 0, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {3, 0, P_LIT_re}});
 	re_table_set(table, 1, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {16, 1, P_LIT_elm}});
@@ -721,56 +724,56 @@ re_table_prepare()
 	re_table_set(table, 1, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {16, 1, P_LIT_elm}});
 	re_table_set(table, 1, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {16, 1, P_LIT_elm}});
 	re_table_set(table, 1, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {16, 1, P_LIT_elm}});
-	re_table_set(table, 2, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 2, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 3, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {46, 1, P_LIT_fch}});
-	re_table_set(table, 4, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
-	re_table_set(table, 4, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {19, 1, P_LIT_elm}});
+	re_table_set(table, 2, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 2, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {41, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 3, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 4, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 4, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
 	re_table_set(table, 6, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {3, 0, P_LIT_re}});
 	re_table_set(table, 6, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {3, 0, P_LIT_re}});
 	re_table_set(table, 7, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {17, 1, P_LIT_elm}});
@@ -789,40 +792,40 @@ re_table_prepare()
 	re_table_set(table, 7, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {17, 1, P_LIT_elm}});
 	re_table_set(table, 7, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {17, 1, P_LIT_elm}});
 	re_table_set(table, 7, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {17, 1, P_LIT_elm}});
-	re_table_set(table, 8, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 8, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
-	re_table_set(table, 10, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {44, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 8, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {43, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
+	re_table_set(table, 10, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_fch}});
 	re_table_set(table, 11, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {12, 1, P_LIT_sub}});
 	re_table_set(table, 11, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {12, 1, P_LIT_sub}});
 	re_table_set(table, 11, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {12, 1, P_LIT_sub}});
@@ -839,22 +842,23 @@ re_table_prepare()
 	re_table_set(table, 11, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {12, 1, P_LIT_sub}});
 	re_table_set(table, 11, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {12, 1, P_LIT_sub}});
 	re_table_set(table, 11, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {12, 1, P_LIT_sub}});
-	re_table_set(table, 12, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
-	re_table_set(table, 12, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {18, 1, P_LIT_elm}});
+	re_table_set(table, 12, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
+	re_table_set(table, 12, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {45, 1, P_LIT_fch}});
 	re_table_set(table, 13, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {2, 0, P_LIT_re_BAR}});
 	re_table_set(table, 13, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {2, 0, P_LIT_re_BAR}});
 	re_table_set(table, 14, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {15, 1, P_LIT_elm}});
@@ -890,396 +894,389 @@ re_table_prepare()
 	re_table_set(table, 17, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {11, 0, P_LIT_msub_BAR}});
 	re_table_set(table, 17, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {11, 0, P_LIT_msub_BAR}});
 	re_table_set(table, 17, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {11, 0, P_LIT_msub_BAR}});
-	re_table_set(table, 19, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_sli}});
-	re_table_set(table, 19, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_sli}});
-	re_table_set(table, 19, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_sli}});
-	re_table_set(table, 19, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_sli}});
-	re_table_set(table, 19, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_sli}});
-	re_table_set(table, 19, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_sli}});
-	re_table_set(table, 19, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {42, 1, P_LIT_sli}});
-	re_table_set(table, 20, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
-	re_table_set(table, 20, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
-	re_table_set(table, 20, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
-	re_table_set(table, 20, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
-	re_table_set(table, 20, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
-	re_table_set(table, 20, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
-	re_table_set(table, 20, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
-	re_table_set(table, 21, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {39, 1, P_LIT_sli}});
-	re_table_set(table, 21, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {39, 1, P_LIT_sli}});
-	re_table_set(table, 21, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {39, 1, P_LIT_sli}});
-	re_table_set(table, 21, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {39, 1, P_LIT_sli}});
-	re_table_set(table, 21, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {39, 1, P_LIT_sli}});
-	re_table_set(table, 21, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {39, 1, P_LIT_sli}});
-	re_table_set(table, 21, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {39, 1, P_LIT_sli}});
-	re_table_set(table, 23, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {37, 0, P_LIT_slc_BAR}});
-	re_table_set(table, 25, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 25, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 26, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 27, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 28, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 29, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 30, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 31, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 32, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 33, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 34, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 35, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 36, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 37, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 38, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {34, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 39, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
-	re_table_set(table, 41, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {0, 2, P_LIT_re}});
-	re_table_set(table, 41, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {0, 2, P_LIT_re}});
-	re_table_set(table, 42, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {4, 2, P_LIT_exp}});
-	re_table_set(table, 42, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {4, 2, P_LIT_exp}});
-	re_table_set(table, 42, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {4, 2, P_LIT_exp}});
-	re_table_set(table, 43, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {6, 0, P_LIT_exp_BAR}});
-	re_table_set(table, 43, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {6, 0, P_LIT_exp_BAR}});
-	re_table_set(table, 43, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {6, 0, P_LIT_exp_BAR}});
-	re_table_set(table, 44, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 44, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 45, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 46, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
-	re_table_set(table, 47, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 47, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
-	re_table_set(table, 48, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {37, 0, P_LIT_slc_BAR}});
-	re_table_set(table, 50, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 50, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
-	re_table_set(table, 51, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {38, 2, P_LIT_slc}});
-	re_table_set(table, 52, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {37, 0, P_LIT_slc_BAR}});
-	re_table_set(table, 53, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 53, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
-	re_table_set(table, 54, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {2, 0, P_LIT_re_BAR}});
-	re_table_set(table, 54, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {2, 0, P_LIT_re_BAR}});
-	re_table_set(table, 55, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {5, 2, P_LIT_exp_BAR}});
-	re_table_set(table, 55, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {5, 2, P_LIT_exp_BAR}});
-	re_table_set(table, 55, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {5, 2, P_LIT_exp_BAR}});
-	re_table_set(table, 56, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {35, 3, P_LIT_slc}});
-	re_table_set(table, 57, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {41, 3, P_LIT_sli}});
-	re_table_set(table, 57, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {41, 3, P_LIT_sli}});
-	re_table_set(table, 57, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {41, 3, P_LIT_sli}});
-	re_table_set(table, 57, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {41, 3, P_LIT_sli}});
-	re_table_set(table, 57, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {41, 3, P_LIT_sli}});
-	re_table_set(table, 57, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {41, 3, P_LIT_sli}});
-	re_table_set(table, 57, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {41, 3, P_LIT_sli}});
-	re_table_set(table, 58, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {36, 2, P_LIT_slc_BAR}});
-	re_table_set(table, 59, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {1, 3, P_LIT_re_BAR}});
-	re_table_set(table, 59, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {1, 3, P_LIT_re_BAR}});
+	re_table_set(table, 19, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
+	re_table_set(table, 19, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
+	re_table_set(table, 19, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
+	re_table_set(table, 19, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
+	re_table_set(table, 19, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
+	re_table_set(table, 19, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
+	re_table_set(table, 19, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {40, 1, P_LIT_sli}});
+	re_table_set(table, 20, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {38, 1, P_LIT_sli}});
+	re_table_set(table, 20, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {38, 1, P_LIT_sli}});
+	re_table_set(table, 20, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {38, 1, P_LIT_sli}});
+	re_table_set(table, 20, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {38, 1, P_LIT_sli}});
+	re_table_set(table, 20, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {38, 1, P_LIT_sli}});
+	re_table_set(table, 20, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {38, 1, P_LIT_sli}});
+	re_table_set(table, 20, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {38, 1, P_LIT_sli}});
+	re_table_set(table, 22, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {36, 0, P_LIT_slc_BAR}});
+	re_table_set(table, 24, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 24, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {25, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 25, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {27, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 26, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {32, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 27, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {30, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 28, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {20, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 29, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {28, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 30, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {23, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 31, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {31, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 32, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {22, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 33, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {19, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 34, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {21, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 35, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {29, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 36, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {26, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 37, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {33, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 38, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {24, 2, P_LIT_esc}});
+	re_table_set(table, 40, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {0, 2, P_LIT_re}});
+	re_table_set(table, 40, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {0, 2, P_LIT_re}});
+	re_table_set(table, 41, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {4, 2, P_LIT_exp}});
+	re_table_set(table, 41, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {4, 2, P_LIT_exp}});
+	re_table_set(table, 41, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {4, 2, P_LIT_exp}});
+	re_table_set(table, 42, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {6, 0, P_LIT_exp_BAR}});
+	re_table_set(table, 42, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {6, 0, P_LIT_exp_BAR}});
+	re_table_set(table, 42, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {6, 0, P_LIT_exp_BAR}});
+	re_table_set(table, 43, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 43, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {9, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 44, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {8, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 45, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {10, 1, P_LIT_msub_BAR}});
+	re_table_set(table, 46, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 46, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {7, 2, P_LIT_msub}});
+	re_table_set(table, 47, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {36, 0, P_LIT_slc_BAR}});
+	re_table_set(table, 49, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 49, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {13, 3, P_LIT_sub}});
+	re_table_set(table, 50, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {37, 2, P_LIT_slc}});
+	re_table_set(table, 51, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {36, 0, P_LIT_slc_BAR}});
+	re_table_set(table, 52, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_CAP, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_LBRACK, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_LPAREN, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_MINUS, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_PLUS, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_QUESTION, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 52, P_TOK_TIMES, (re_pobj){.action = REDUCE, .op.reduce = {14, 3, P_LIT_sub}});
+	re_table_set(table, 53, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {2, 0, P_LIT_re_BAR}});
+	re_table_set(table, 53, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {2, 0, P_LIT_re_BAR}});
+	re_table_set(table, 54, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {5, 2, P_LIT_exp_BAR}});
+	re_table_set(table, 54, P_TOK_BAR, (re_pobj){.action = REDUCE, .op.reduce = {5, 2, P_LIT_exp_BAR}});
+	re_table_set(table, 54, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {5, 2, P_LIT_exp_BAR}});
+	re_table_set(table, 55, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {34, 3, P_LIT_slc}});
+	re_table_set(table, 56, P_TOK_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {39, 3, P_LIT_sli}});
+	re_table_set(table, 56, P_TOK_CRETURN_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {39, 3, P_LIT_sli}});
+	re_table_set(table, 56, P_TOK_DOT, (re_pobj){.action = REDUCE, .op.reduce = {39, 3, P_LIT_sli}});
+	re_table_set(table, 56, P_TOK_NEWLINE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {39, 3, P_LIT_sli}});
+	re_table_set(table, 56, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {39, 3, P_LIT_sli}});
+	re_table_set(table, 56, P_TOK_SLASH, (re_pobj){.action = REDUCE, .op.reduce = {39, 3, P_LIT_sli}});
+	re_table_set(table, 56, P_TOK_TABULATE_CHAR, (re_pobj){.action = REDUCE, .op.reduce = {39, 3, P_LIT_sli}});
+	re_table_set(table, 57, P_TOK_RBRACK, (re_pobj){.action = REDUCE, .op.reduce = {35, 2, P_LIT_slc_BAR}});
+	re_table_set(table, 58, P_TOK_END, (re_pobj){.action = REDUCE, .op.reduce = {1, 3, P_LIT_re_BAR}});
+	re_table_set(table, 58, P_TOK_RPAREN, (re_pobj){.action = REDUCE, .op.reduce = {1, 3, P_LIT_re_BAR}});
 
-	return table;
+    return table;
 }
 
 typedef struct
@@ -1406,7 +1403,7 @@ re_compute(re_parse_t* pr)
 					case 3:
 					case 6:
 					case 11:
-					case 37:
+					case 36:
 						/* empty statement */
 						retmp1 = re_exp_new((re_exp) {
 							.tag = empty_exp,
@@ -1414,10 +1411,12 @@ re_compute(re_parse_t* pr)
 						});
 						break;
 
-					case 46:
 					case 45:
 					case 44:
 					case 43:
+					case 42:
+					case 41:
+						/* fch <- esc */
 						/* fch <- CRETURN_CHAR */
 						/* fch <- NEWLINE_CHAR */
 						/* fch <- TABULATE_CHAR */
@@ -1426,7 +1425,7 @@ re_compute(re_parse_t* pr)
 						retmp1 = retmp2;
 						break;
 						
-					case 42:
+					case 40:
 						/* sli <- DOT */
 						m_stack_pop(&(pr->restack));
 						retmp1 = re_exp_new((re_exp) {
@@ -1435,7 +1434,7 @@ re_compute(re_parse_t* pr)
 						});
 						break;
 
-					case 41:
+					case 39:
 						/* sli <- fch '-' fch */
 						retmp3 = *(re_exp**)m_stack_pop(&(pr->restack)); // fch
 						m_stack_pop(&(pr->restack));
@@ -1447,16 +1446,14 @@ re_compute(re_parse_t* pr)
 						});
 						break;
 
-					case 40:
-					case 39:
-						/* sli <- esc  */
+					case 38:
 						/* sli <- fch */
 						retmp2 = *(re_exp**)m_stack_pop(&(pr->restack)); // esc, fch
 						retmp1 = retmp2;
 						break;
 
-					case 38:
-					case 36:
+					case 37:
+					case 35:
 						/* slc' <- sli slc' */
 						/* slc  <- sli slc' */
 						retmp3 = *(re_exp**)m_stack_pop(&(pr->restack)); // slc'
@@ -1486,7 +1483,7 @@ re_compute(re_parse_t* pr)
 						}
 						break;
 
-					case 35:
+					case 34:
 						/* slc <- CAP sli slc' */
 						retmp3 = *(re_exp**)m_stack_pop(&(pr->restack)); // slc'
 						retmp2 = *(re_exp**)m_stack_pop(&(pr->restack)); // sli
@@ -1517,7 +1514,7 @@ re_compute(re_parse_t* pr)
 						}
 						break;
 
-					case 34:
+					case 33:
 						m_stack_pop(&(pr->restack));
 						retmp1 = re_exp_new((re_exp) {
 							.tag = char_exp,
@@ -1525,7 +1522,7 @@ re_compute(re_parse_t* pr)
 						});
 						break;
 
-					case 33:
+					case 32:
 						m_stack_pop(&(pr->restack));
 						retmp1 = re_exp_new((re_exp) {
 							.tag = char_exp,
@@ -1533,7 +1530,7 @@ re_compute(re_parse_t* pr)
 						});
 						break;
 						
-					case 32:
+					case 31:
 						m_stack_pop(&(pr->restack));
 						retmp1 = re_exp_new((re_exp) {
 							.tag = char_exp,
@@ -1541,7 +1538,6 @@ re_compute(re_parse_t* pr)
 						});
 						break;
 					
-					case 31:
 					case 30:
 					case 29:
 					case 28:
@@ -1553,12 +1549,13 @@ re_compute(re_parse_t* pr)
 					case 22:
 					case 21:
 					case 20:
+					case 19:
 						retmp2 = *(re_exp**)m_stack_pop(&(pr->restack));
 						m_stack_pop(&(pr->restack));
 						retmp1 = retmp2;
 						break;
 
-					case 19:
+					case 18:
 						m_stack_pop(&(pr->restack));
 						retmp1 = re_exp_new((re_exp) {
 							.tag = dot_exp,
@@ -1566,7 +1563,6 @@ re_compute(re_parse_t* pr)
 						});
 						break;
 
-					case 18:
 					case 17:
 					case 16:
 					case 15:
@@ -1819,7 +1815,7 @@ char* re_strcat(char* dst, char* src) {
 	fwrite((str), sizeof(char), strlen((str)), (f));\
 } while (0);
 
-#define ch_to_str(ch) ((ch) == '\n' ? "\\n" : ((ch) == '\t' ? "\\t" : ((ch) == '\r' ? "\\r" : ((ch) == '\"' ? "\\\"" : ((ch) == '\'' ? "\\\'" : (char[]){(ch), 0})))))
+#define ch_to_str(ch) ((ch) == '\n' ? "\\n" : ((ch) == '\t' ? "\\t" : ((ch) == '\r' ? "\\r" : ((ch) == '\"' ? "\\\"" : ((ch) == '\'' ? "\\\'" : ((ch) == '\\' ? "\\\\" : (char[]){(ch), 0}))))))
 
 /* get string form of regular expression */
 void re_conv(re_exp* re, FILE* fptr, int space)
@@ -1974,65 +1970,112 @@ void re_conv(re_exp* re, FILE* fptr, int space)
 
 #undef re_write
 #undef ch_to_str
+#define BUFSIZE MAX_PATH
 
 int main(int argc, char** argv)
 {
+
+	FILE* tmpl;
+	FILE* outf;
+
+	char* regstr = NULL;
+	char* ofname = NULL;
+	char* ifname = NULL;
+
+	for (int i = 1; i < argc; ++i)
+	{
+		char* arg = argv[i];
+		
+		if (arg[0] == '-') {
+			if (strlen(arg) != 2) {
+				fprintf(stderr, "invalid flag \"%s\" argument given.\n", arg);
+				exit(EXIT_FAILURE);
+			}
+			switch (arg[1])
+			{
+				case 'f':
+					if (i == argc - 1) {
+						fprintf(stderr, "no input file provided with \"f\" flag.\n");
+						exit(EXIT_FAILURE);
+					}
+					ifname = argv[++i];
+					break;
+
+				default:
+					fprintf(stderr, "invalid flag \"%s\" argument given.\n", arg);
+					exit(EXIT_FAILURE);
+			}
+		}
+		
+		else
+		{
+			if (ofname == NULL) {
+				ofname = arg;
+			} else if (regstr == NULL) {
+				regstr = arg;
+			} else {
+				fprintf(stderr, "extra argument \"%s\" provided.\n", arg);
+				exit(EXIT_FAILURE);
+			}
+		}
+	}
+
+	if (!ofname) {
+		fprintf(stderr, "no output filename provided.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	if (!ifname && !regstr) {
+		fprintf(stderr, "no input file or regex argument provided.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	/* open template file ptr */
+	tmpl = fopen("./res/base.txt", "r");
+	if (tmpl == NULL) {
+		strerror(errno);
+		exit(EXIT_FAILURE);
+	}
+
+	/* open output file ptr */
+	outf = fopen(ofname, "w");
+	if (outf == NULL) {
+		strerror(errno);
+		exit(EXIT_FAILURE);
+	}
+
+	if (ifname) {
+		int g;
+		FILE* ifptr = fopen(ifname, "r");
+		if (outf == NULL) {
+			strerror(errno);
+			exit(EXIT_FAILURE);
+		}
+		m_stack stk = m_stack_init(char);
+		while ((g = fgetc(ifptr)) != EOF)
+			m_stack_push(&stk, &g);
+		m_stack_push(&stk, (char[]){'\0'});
+		regstr = (char*)stk.content;
+	}
+	
 	int pos;
 	int stat;
-	re_tk tk;
-	char* str;
-	char* fnom;
-	FILE* inf;
-	FILE* outf;
 	char* line;
 	size_t len;
 	re_exp* rexpr;
 	ssize_t nread;
 	re_scan_t scptr;
 	re_parse_t psptr;
-
-	switch (argc) {
-		case 1:
-			fprintf(stderr, "regular expression not provided\n");
-			exit(EXIT_FAILURE);
-			break;
-		case 2:
-			str  = argv[1];
-			fnom = "output.c";
-			break;
-		case 3:
-			str  = argv[1];
-			fnom = argv[2];
-			break;
-		default:
-			fprintf(stderr, "too many arguments!\n");
-			exit(EXIT_FAILURE);
-			break;
-	}
-
-	/* open input file ptr */
-	inf = fopen("./res/base.txt", "r");
-	if (inf == NULL) {
-		strerror(errno);
-		exit(EXIT_FAILURE);
-	}
-
-	/* open output file ptr */
-	outf = fopen(fnom, "w");
-	if (outf == NULL) {
-		strerror(errno);
-		exit(EXIT_FAILURE);
-	}
 	
 	/* prepare variables */
 	stat  = 0;
 	line  = NULL;
-	scptr = re_scan_init(str);
+	scptr = re_scan_init(regstr);
 	psptr = re_parse_init(&scptr);
 	rexpr = re_compute(&psptr);
 
 	/* line by line, read input and compare */
-	while ((nread = getline(&line, &len, inf)) != -1) {
+	while ((nread = getline(&line, &len, tmpl)) != -1) {
 		/* check if the subtree doesn't exist */
 		if ((pos = issubstr(line, "/* input */")) == -1) {
 			/* write line to output file */
@@ -2042,13 +2085,24 @@ int main(int argc, char** argv)
 			/* depends where you are, I guess... */
 			switch (stat) {
 				case 0:
+					/* write expression */
+					for (int i = 0; i < pos; ++i) fputc(' ', outf);
+					fwrite("// regex: ", sizeof(char), 10, outf);
+					fwrite(regstr, sizeof(char), strlen(regstr), outf);
+					fputc('\n', outf);
+					break;
+
+				case 1:
 					/* write info, depending on place */
 					re_conv(rexpr, outf, pos / PAD_COUNT);
 					break;
 			}
+
+			/* increase state */
+			stat++;
 		}
 	}
 
-	fclose(inf);
+	fclose(tmpl);
 	fclose(outf);
 }
