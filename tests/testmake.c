@@ -385,10 +385,13 @@ int main()
     m_testmake_suite_init(testmake, "strimpl.txt", "\"([ !#-&\\(-\\[\\]-}]|\\\\[tnr\"\'])*\"");
     m_testmake_add(testmake, "strimpl.txt", "\\\"", false);
     m_testmake_add(testmake, "strimpl.txt", "string", false);
-    m_testmake_add(testmake, "strimpl.txt", "\\\"\\\"", true);
-    m_testmake_add(testmake, "strimpl.txt", "\\\"string\\\"", true);
-    m_testmake_add(testmake, "strimpl.txt", "\\\"\\\"\\\"", true);
-    m_testmake_add(testmake, "strimpl.txt", "\\\"friday afternoon\\nyou already know\\n\\\"", true);
+    m_testmake_add(testmake, "strimpl.txt", "\"\"", true);
+    m_testmake_add(testmake, "strimpl.txt", "\"string\"", true);
+    m_testmake_add(testmake, "strimpl.txt", "\"\\t\"", true);
+    m_testmake_add(testmake, "strimpl.txt", "\"\\k\"", false);
+    m_testmake_add(testmake, "strimpl.txt", "\"boast\"", true);
+    m_testmake_add(testmake, "strimpl.txt", "\"string\"", true);
+    m_testmake_add(testmake, "strimpl.txt", "\"\\\"\\\"", true);
 
     // C's hexadecimal number implementation
 
